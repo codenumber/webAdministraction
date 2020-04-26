@@ -1,9 +1,18 @@
 import Vue from 'vue'
 import App from './App.vue'
-import router from './router'
+import axios from 'axios'
+
+import './assets/css/global.css'
+import "element-ui/lib/theme-chalk/index.css"
+
+import router from './router.js'
 import './plugins/element.js'
 
-Vue.config.productionTip = false
+
+axios.defaults.baseURL = 'http://timemeetyou.com:8889/api/private/v1/'
+
+Vue.prototype.$axios = axios
+
 
 new Vue({
   router,
