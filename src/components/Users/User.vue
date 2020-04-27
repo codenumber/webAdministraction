@@ -17,7 +17,7 @@
         </el-col>
        </el-row>
        <el-table :data="userList"  style="width:100%" stripe border>
-         <el-table-column type="index"></el-table-column>
+         <el-table-column type="index" label="#"></el-table-column>
          <el-table-column prop="username" label="姓名"></el-table-column>
          <el-table-column prop="email" label="邮箱"></el-table-column>
          <el-table-column prop="mobile" label="电话"></el-table-column>
@@ -36,7 +36,7 @@
              <el-button type="primary" icon="el-icon-edit" size="mini" @click="showEditDialog(scope.row.id)"></el-button>
              <el-button type="danger" icon="el-icon-delete" size="mini" @click="delUserInfo(scope.row.id)"></el-button>
             <el-tooltip  effect="dark" content="角色操作" placement="top" :enterable="false">
-             <el-button type="primary" icon="el-icon-setting" size="mini"></el-button>
+             <el-button type="warning" icon="el-icon-setting" size="mini" @click="setRole(scope.row)"></el-button>
              </el-tooltip>
            </template>
          </el-table-column>
@@ -96,6 +96,26 @@
         <el-button type="primary" @click="editUserInfo">确 定</el-button>
       </span>
     </el-dialog>
+
+    <el-dialog
+      title="分配角色"
+      :visible.sync="setRoleDialogVisible"
+      width="50%" @close="closeEdiltRoleDialog">
+      <p>当前的用户：{{userInfo.username}}</p>
+      <p>当前的角色：{{userInfo.role_name}} <span v-show="userInfo.id == 500">*admin用户系统不予删除</span></p>
+      <p>分配新角色：<el-select v-model="roleId" placeholder="请选择">
+      <el-option
+      v-for="item in rolesList"
+      :key="item.id"
+      :label="item.roleName"
+      :value="item.id">
+    </el-option>
+  </el-select></p>
+      <span slot="footer" class="dialog-footer">
+        <el-button @click="setRoleDialogVisible = false">取 消</el-button>
+        <el-button type="primary" @click="saveEditRoleById">确 定</el-button>
+      </span>
+    </el-dialog>
   </div>
 </template>
 
@@ -121,11 +141,15 @@ export default {
       userList: [],
       total: 0,
       addDialogVisible: false,
+      userInfo: {},
+      rolesList: [],
+      setRoleDialogVisible: false,
+      roleId: '',
       addForm: {
         username: '',
         password: '',
         email: '',
-        mobile: ''
+        mobile: '',
       },
       addFormRules: {
           username: [
@@ -200,7 +224,6 @@ export default {
           this.addDialogVisible = false
           this.getUserList()
         })
-
       })
     },
     showEditDialog(userId) {
@@ -241,11 +264,39 @@ export default {
       }).catch(err =>{
          this.$message.info('已取消删除操作')
       })
+    },
+    setRole(user) {
+      this.userInfo = user
+      this.$axios.get('roles').then(res => {
+        const { data: content } = res
+        if (content.meta.status != 200) return this.$message.error('获取角色信息失败')
+        this.rolesList = content.data
+
+      })
+      this.setRoleDialogVisible = true
+    },
+    saveEditRoleById() {
+      console.log(this.userInfo)
+      this.$axios.put(`users/${this.userInfo.id}/role`,{ rid: this.roleId}).then(res => {console.log(res)
+        const { data: content } = res
+        if (content.meta.status != 200) return this.$message.error('修改角色信息失败')
+        this.$message.success('修改用户角色成功')
+        this.getUserList()
+        this.setRoleDialogVisible = false
+      })
+    },
+    closeEdiltRoleDialog() {
+      this.userInfo = {}
+      this.roleId = ''
     }
   }
 }
 </script>
 
 <style language="less" scoped>
-
+.el-dialog {
+  span {
+    color: #BD2130;
+  }
+}
 </style>
