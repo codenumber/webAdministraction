@@ -19,3 +19,6 @@ html,body,#app　{
 .el-pagination {
 	margin-top: 10px;
 }
+.el-cascader-menu {
+	height: 350px;
+}

@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import App from './App.vue'
 import axios from 'axios'
+import TableTree from 'vue-table-with-tree-grid'
 
 import './assets/css/global.css'
 import "element-ui/lib/theme-chalk/index.css"
@@ -17,6 +18,7 @@ axios.interceptors.request.use(config => {
 })
 Vue.prototype.$axios = axios
 
+Vue.component('zk-table',TableTree)
 
 new Vue({
   router,
