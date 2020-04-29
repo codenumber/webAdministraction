@@ -21,7 +21,7 @@
                   <span>{{item.authName}}</span>
                </template>
 
-                <el-menu-item :index="'/' + submenu.path" v-for="submenu in item.children" :key="submenu.id" @click="saveNavPath('/' + item.path)">
+                <el-menu-item :index="'/' + submenu.path" v-for="submenu in item.children" :key="submenu.id" @click="saveNavPath('/' + submenu.path)">
                     <template slot="title">
                       <i class="el-icon-menu"></i>
                       <span>{{submenu.authName}}</span>
