@@ -22,3 +22,10 @@ html,body,#app　{
 .el-cascader-menu {
 	height: 350px;
 }
+.el-steps {
+	margin: 15px 0;
+}
+.quill-editor {
+	height: 300px;
+	margin-bottom: 30px;
+}
