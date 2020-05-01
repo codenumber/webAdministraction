@@ -200,10 +200,12 @@ export default {
           this.addForm.attrs.push({attr_id: item.attr_id, attr_vals: item.attr_vals.join(',')})
         })
         form.attrs = this.addForm.attrs
-        console.log(form.pics)
-        // this.$axios.post('goods',form).then(res => {
-        //   console.log(res)
-        // })
+       //接口数据有误，导致如果提交含有图片路径信息是会报错的，等后续如果有做接口改动
+        this.$axios.post('goods',form).then(res => {
+          const { data: content} = res
+          if (content.meta.status != 201) return this.$message.error('错误')
+          this.$router.push('/goods')
+        })
       })
       }
   },

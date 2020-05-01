@@ -38,6 +38,8 @@ Step,
 CheckboxGroup,
 Checkbox,
 Upload,
+Timeline,
+TimelineItem,
 MenuItemGroup} from 'element-ui'
 
 Vue.use(Button)
@@ -77,6 +79,8 @@ Vue.use(CheckboxGroup)
 Vue.use(Upload)
 Vue.use(Steps)
 Vue.use(Step)
+Vue.use(Timeline)
+Vue.use(TimelineItem)
 
 
 Vue.prototype.$message = Message
