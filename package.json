@@ -11,7 +11,7 @@
   "dependencies": {
     "@babel/core": "^7.9.0",
     "@babel/preset-env": "^7.9.5",
-    "axios": "^0.19.2",
+    "axios": "^0.21.1",
     "babel-runtime": "^6.26.0",
     "core-js": "^3.6.4",
     "echarts": "^4.7.0",
